@@ -9,3 +9,8 @@ export const srOnlyCss = css`
   white-space: nowrap;
   width: 1px;
 `;
+
+export const transitionCss = css`
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+`;
