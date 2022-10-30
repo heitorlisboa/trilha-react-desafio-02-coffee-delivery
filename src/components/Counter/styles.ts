@@ -1,14 +1,20 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { srOnlyCss, transitionCss } from '../../styles/css-partials';
 
-export const CounterContainer = styled.div`
+export const CounterContainer = styled.div<{ small?: boolean }>`
   background-color: ${(props) => props.theme['base-button']};
 
   display: flex;
   align-items: center;
 
   padding: 0.5rem;
+  ${(props) =>
+    props.small &&
+    css`
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+    `}
   border-radius: 0.375rem;
 `;
 

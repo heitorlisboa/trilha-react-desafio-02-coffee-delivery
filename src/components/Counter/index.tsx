@@ -15,13 +15,14 @@ type CounterProps = Omit<
 > & {
   id: string;
   label: string;
+  small?: boolean;
 };
 
-export function Counter({ id, label, ...props }: CounterProps) {
+export function Counter({ id, label, small, ...props }: CounterProps) {
   return (
-    <CounterContainer>
+    <CounterContainer small={small}>
       <CounterLabel htmlFor={id}>{label}</CounterLabel>
-      <CounterStepperButton>
+      <CounterStepperButton type="button">
         <SrOnlyText>Diminuir {label}</SrOnlyText>
         <Minus size={14} weight="bold" />
       </CounterStepperButton>
@@ -33,7 +34,7 @@ export function Counter({ id, label, ...props }: CounterProps) {
         aria-live="polite"
         {...props}
       />
-      <CounterStepperButton>
+      <CounterStepperButton type="button">
         <SrOnlyText>Aumentar {label}</SrOnlyText>
         <Plus size={14} weight="bold" />
       </CounterStepperButton>
