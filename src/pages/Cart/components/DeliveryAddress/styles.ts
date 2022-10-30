@@ -66,6 +66,10 @@ export const AddressInputs = styled.div`
 
 export const AddressInputContainer = styled.div`
   position: relative;
+
+  & > input {
+    padding-right: 4rem;
+  }
 `;
 
 export const AddressLabel = styled.label`
