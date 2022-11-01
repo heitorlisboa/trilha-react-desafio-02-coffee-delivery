@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { MapPin, ShoppingCart } from 'phosphor-react';
 
 import { CartContext } from '../../contexts/CartContext';
@@ -31,7 +32,9 @@ export function Header() {
     <HeaderContainer>
       <HeaderInnerContainer>
         <h1>
-          <img src={logo} alt="Coffee Delivery" />
+          <Link to="/">
+            <img src={logo} alt="Coffee Delivery" />
+          </Link>
         </h1>
 
         <Actions>
