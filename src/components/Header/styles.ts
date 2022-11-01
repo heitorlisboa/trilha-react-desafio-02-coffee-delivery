@@ -9,6 +9,10 @@ export const HeaderContainer = styled.header`
   background-color: ${(props) => props.theme['background']};
   position: sticky;
   top: 0;
+
+  /* This is necessary to prevent elements with opacity != 1 from staying on top
+  of the header */
+  z-index: 1;
 `;
 
 export const HeaderInnerContainer = styled(InnerContainer)`

@@ -59,8 +59,12 @@ export const CounterStepperButton = styled.button`
   transition-property: color;
   ${transitionCss}
 
-  &:is(:hover, :focus-visible) {
+  &:not(:disabled):is(:hover, :focus-visible) {
     color: ${(props) => props.theme['purple-dark']};
+  }
+
+  &:disabled {
+    opacity: 0.7;
   }
 `;
 

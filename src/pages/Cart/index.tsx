@@ -1,3 +1,8 @@
+import { type FormEvent, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { CartContext } from '../../contexts/CartContext';
+
 import {
   CartInnerContainer,
   FinishOrderInnerContainer,
@@ -10,8 +15,22 @@ import { Payment } from './components/Payment';
 import { SelectedCoffees } from './components/SelectedCoffees';
 
 export function Cart() {
+  const { dispatch } = useContext(CartContext);
+
+  const navigate = useNavigate();
+
+  function handleConfirmOrder(event: FormEvent) {
+    event.preventDefault();
+
+    // Clearing the shopping cart
+    dispatch({ type: 'clearCart' });
+
+    // Redirecting the user to the success page
+    navigate('/success');
+  }
+
   return (
-    <form>
+    <form onSubmit={handleConfirmOrder}>
       <CartInnerContainer>
         <FormSectionContainer>
           <FormSectionTitle>Complete seu pedido</FormSectionTitle>

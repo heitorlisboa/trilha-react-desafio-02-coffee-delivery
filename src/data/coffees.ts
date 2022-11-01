@@ -1,17 +1,4 @@
-type Coffee = {
-  id: string;
-  name: string;
-  description: string;
-  categories: (
-    | 'tradicional'
-    | 'com leite'
-    | 'gelado'
-    | 'especial'
-    | 'alcoólico'
-  )[];
-  price: number;
-  imageUrl: string;
-};
+import type { Coffee } from '../@types/coffee';
 
 export const coffees: Coffee[] = [
   {
@@ -131,3 +118,8 @@ export const coffees: Coffee[] = [
     imageUrl: '/coffees/irlandes.png',
   },
 ];
+
+export function getCoffeeById(coffeeId: string): Coffee | null {
+  const coffee = coffees.find((coffee) => coffee.id === coffeeId);
+  return coffee ?? null;
+}

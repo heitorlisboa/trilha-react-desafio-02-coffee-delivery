@@ -15,26 +15,58 @@ type CounterProps = Omit<
 > & {
   id: string;
   label: string;
+  value: number;
+  min?: number;
+  max?: number;
   small?: boolean;
+  onStepperClick: (action: 'increment' | 'decrement') => void;
 };
 
-export function Counter({ id, label, small, ...props }: CounterProps) {
+export function Counter({
+  id,
+  label,
+  min,
+  max,
+  small,
+  onStepperClick,
+  ...props
+}: CounterProps) {
+  function handleIncrement() {
+    onStepperClick('increment');
+  }
+
+  function handleDecrement() {
+    onStepperClick('decrement');
+  }
+
+  const isDecrementButtonDisabled = min !== undefined && props.value <= min;
+  const isIncrementButtonDisabled = max !== undefined && props.value >= max;
+
   return (
     <CounterContainer small={small}>
       <CounterLabel htmlFor={id}>{label}</CounterLabel>
-      <CounterStepperButton type="button">
+      <CounterStepperButton
+        type="button"
+        onClick={handleDecrement}
+        disabled={isDecrementButtonDisabled}
+      >
         <SrOnlyText>Diminuir {label}</SrOnlyText>
         <Minus size={14} weight="bold" />
       </CounterStepperButton>
       <CounterInput
         id={id}
-        type="number"
+        // Sadly, it needs to be a text input for 'aria-live' to work
+        type="text"
         readOnly
         tabIndex={-1}
         aria-live="polite"
         {...props}
       />
-      <CounterStepperButton type="button">
+      <CounterStepperButton
+        type="button"
+        onClick={handleIncrement}
+        disabled={isIncrementButtonDisabled}
+      >
         <SrOnlyText>Aumentar {label}</SrOnlyText>
         <Plus size={14} weight="bold" />
       </CounterStepperButton>
