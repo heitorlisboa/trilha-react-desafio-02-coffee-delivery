@@ -1,5 +1,9 @@
-import * as ToggleGroup from '@radix-ui/react-toggle-group';
+import * as RadioGroup from '@radix-ui/react-radio-group';
+import { useFormContext } from 'react-hook-form';
 import { Bank, CreditCard, CurrencyDollar, Money } from 'phosphor-react';
+
+import { PaymentMethods } from '../../../../constants';
+import type { OrderFormSchema } from '../..';
 
 import {
   PaymentContainer,
@@ -11,6 +15,12 @@ import {
 } from './styles';
 
 export function Payment() {
+  const { setValue } = useFormContext<OrderFormSchema>();
+
+  function handleChangePaymentMethod(value: string) {
+    setValue('paymentMethod', value);
+  }
+
   return (
     <PaymentContainer>
       <PaymentHeader>
@@ -21,28 +31,34 @@ export function Payment() {
         </PaymentSubtitle>
       </PaymentHeader>
 
-      <ToggleGroup.Root type="single" aria-label="Método de pagamento" asChild>
+      <RadioGroup.Root
+        aria-label="Método de pagamento"
+        onValueChange={handleChangePaymentMethod}
+        orientation="horizontal"
+        required
+        asChild
+      >
         <PaymentOptions>
-          <ToggleGroup.Item value="creditCard" asChild>
+          <RadioGroup.Item value={PaymentMethods.CREDIT_CARD} asChild>
             <PaymentOption>
               <CreditCard size={16} />
               Cartão de crédito
             </PaymentOption>
-          </ToggleGroup.Item>
-          <ToggleGroup.Item value="debitCard" asChild>
+          </RadioGroup.Item>
+          <RadioGroup.Item value={PaymentMethods.DEBIT_CARD} asChild>
             <PaymentOption>
               <Bank size={16} />
               Cartão de débito
             </PaymentOption>
-          </ToggleGroup.Item>
-          <ToggleGroup.Item value="money" asChild>
+          </RadioGroup.Item>
+          <RadioGroup.Item value={PaymentMethods.MONEY} asChild>
             <PaymentOption>
               <Money size={16} />
               Dinheiro
             </PaymentOption>
-          </ToggleGroup.Item>
+          </RadioGroup.Item>
         </PaymentOptions>
-      </ToggleGroup.Root>
+      </RadioGroup.Root>
     </PaymentContainer>
   );
 }

@@ -87,6 +87,17 @@ export const AddressInput = styled.input`
   border: 0.0625rem /* 1px */ solid ${(props) => props.theme['base-button']};
   border-radius: 0.25rem;
 
+  /* Removing the input stepper arrows */
+  /* For Mozilla */
+  -moz-appearance: textfield;
+  appearance: none;
+  /* For Webkit */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   &::placeholder {
     color: ${(props) => props.theme['base-label']};
   }
@@ -104,4 +115,6 @@ export const AddressInputOptionalLabel = styled.label`
 
   height: fit-content;
   margin: auto 0;
+
+  pointer-events: none;
 `;

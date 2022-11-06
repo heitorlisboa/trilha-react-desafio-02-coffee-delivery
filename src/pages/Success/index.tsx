@@ -1,4 +1,8 @@
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CurrencyDollar, MapPin, Timer } from 'phosphor-react';
+
+import type { OrderFormSchema } from '../Cart';
 
 import {
   OrderInfo,
@@ -11,7 +15,27 @@ import {
 
 import successIllustration from '../../assets/success-illustration.svg';
 
+enum PaymentMethodsNames {
+  'creditCard' = 'Cartão de crédito',
+  'debitCard' = 'Cartão de débito',
+  'money' = 'Dinheiro',
+}
+
 export function Success() {
+  const { state: orderInfo }: { state: OrderFormSchema } = useLocation();
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!orderInfo) {
+      navigate('/cart');
+    }
+  }, [orderInfo, navigate]);
+
+  const paymentMethodName =
+    PaymentMethodsNames[
+      orderInfo.paymentMethod as keyof typeof PaymentMethodsNames
+    ];
+
   return (
     <SuccessInnerContainer>
       <div>
@@ -26,9 +50,17 @@ export function Success() {
               <MapPin size={16} weight="fill" />
             </OrderInfoIconWrapper>
             <span>
-              Entrega em <strong>Rua João Daniel Martinelli, 102</strong>
+              Entrega em{' '}
+              <strong>
+                {orderInfo.street}, {orderInfo.houseNumber}
+                {orderInfo.addressComplement &&
+                  ', ' + orderInfo.addressComplement}
+              </strong>
             </span>
-            <span>Farrapos - Porto Alegre, RS</span>
+            <span>
+              {orderInfo.district} - {orderInfo.city},{' '}
+              {orderInfo.federativeUnit}
+            </span>
           </OrderInfoItem>
           <OrderInfoItem>
             <OrderInfoIconWrapper color="yellow" aria-hidden>
@@ -42,7 +74,7 @@ export function Success() {
               <CurrencyDollar size={16} weight="fill" />
             </OrderInfoIconWrapper>
             <span>Pagamento na entrega</span>
-            <strong>Cartão de Crédito</strong>
+            <strong>{paymentMethodName}</strong>
           </OrderInfoItem>
         </OrderInfo>
       </div>

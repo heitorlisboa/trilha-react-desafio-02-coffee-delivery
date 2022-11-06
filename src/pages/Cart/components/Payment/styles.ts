@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { transitionCss } from '../../../../styles/css-partials';
 
 export const PaymentContainer = styled.fieldset`
@@ -67,7 +68,7 @@ export const PaymentOption = styled.button`
     background-color: ${(props) => props.theme['base-hover']};
   }
 
-  &[data-state='on'] {
+  &[data-state='checked'] {
     --border-color: ${(props) => props.theme['purple']};
     background-color: ${(props) => props.theme['purple-light']};
   }

@@ -1,4 +1,7 @@
 import { MapPinLine } from 'phosphor-react';
+import { useFormContext } from 'react-hook-form';
+
+import type { OrderFormSchema } from '../..';
 
 import {
   AddressInput,
@@ -13,6 +16,8 @@ import {
 } from './styles';
 
 export function DeliveryAddress() {
+  const { register } = useFormContext<OrderFormSchema>();
+
   return (
     <DeliveryAddressContainer>
       <DeliveryAddressHeader>
@@ -31,21 +36,29 @@ export function DeliveryAddress() {
             type="text"
             placeholder="CEP"
             required
+            {...register('postalCode')}
           />
         </div>
 
         <div>
           <AddressLabel htmlFor="street">Rua</AddressLabel>
-          <AddressInput id="street" type="text" placeholder="Rua" required />
+          <AddressInput
+            id="street"
+            type="text"
+            placeholder="Rua"
+            required
+            {...register('street')}
+          />
         </div>
 
         <div>
           <AddressLabel htmlFor="house-number">Número</AddressLabel>
           <AddressInput
             id="house-number"
-            type="text"
+            type="number"
             placeholder="Número"
             required
+            {...register('houseNumber', { valueAsNumber: true })}
           />
         </div>
 
@@ -55,6 +68,9 @@ export function DeliveryAddress() {
             id="address-complement"
             type="text"
             placeholder="Complemento"
+            {...register('addressComplement', {
+              setValueAs: (value) => (value !== '' ? value : undefined),
+            })}
           />
           <AddressInputOptionalLabel htmlFor="address-complement">
             Opcional
@@ -68,12 +84,19 @@ export function DeliveryAddress() {
             type="text"
             placeholder="Bairro"
             required
+            {...register('district')}
           />
         </div>
 
         <div>
           <AddressLabel htmlFor="city">Cidade</AddressLabel>
-          <AddressInput id="city" type="text" placeholder="Cidade" required />
+          <AddressInput
+            id="city"
+            type="text"
+            placeholder="Cidade"
+            required
+            {...register('city')}
+          />
         </div>
 
         <div>
@@ -85,6 +108,7 @@ export function DeliveryAddress() {
             type="text"
             placeholder="UF"
             required
+            {...register('federativeUnit')}
           />
         </div>
       </AddressInputs>
