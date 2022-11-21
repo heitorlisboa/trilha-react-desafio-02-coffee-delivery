@@ -1,6 +1,6 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FormProvider, useForm } from 'react-hook-form';
+import { type FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import zod from 'zod';
 
@@ -44,10 +44,7 @@ export function Cart() {
     resolver: zodResolver(orderFormSchema),
   });
 
-  const {
-    formState: { errors },
-    handleSubmit,
-  } = orderForm;
+  const { handleSubmit } = orderForm;
 
   const navigate = useNavigate();
   function handleConfirmOrder(data: OrderFormSchema) {
@@ -58,15 +55,11 @@ export function Cart() {
     navigate('/success', { state: data });
   }
 
-  useEffect(() => {
+  function handleInvalidSubmit(errors: FieldErrors<OrderFormSchema>) {
     // Getting all the form error messages
     const errorMessages = Object.values(errors)
       .filter((error) => error.message !== undefined)
       .map((error) => error.message as string);
-
-    // If there are no errors, there's no need to alert the user
-    const noErrors = errorMessages.length === 0;
-    if (noErrors) return;
 
     // Combining the errors on a single string
     const combinedErrorMessages = errorMessages.reduce(
@@ -80,10 +73,10 @@ export function Cart() {
 
     // Alerting the user about the form errors
     window.alert(combinedErrorMessages);
-  }, [errors]);
+  }
 
   return (
-    <form onSubmit={handleSubmit(handleConfirmOrder)}>
+    <form onSubmit={handleSubmit(handleConfirmOrder, handleInvalidSubmit)}>
       <CartInnerContainer>
         <FormSectionContainer>
           <FormSectionTitle>Complete seu pedido</FormSectionTitle>
